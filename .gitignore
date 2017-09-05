@@ -1,0 +1,43 @@
+# Windows:  
+Thumbs.db  
+ehthumbs.db  
+Desktop.ini  
+
+#Mac
+.DS_*
+
+# dir file:
+public/
+tmp/
+deploy/xml.gz
+web/
+.idea/
+
+#Python:
+*.gz
+*.pyc
+*.py[cod]  
+*.so  
+*.egg  
+*.egg-info  
+dist  
+build
+
+#Redis
+*.rdb
+
+# 
+ghostdriver.log
+  
+# My configurations:  
+db.ini  
+deploy_key_rsa  
+
+#supervisor
+*supervisor/*.log
+*supervisor/*.pid
+.*~
+
+
+# Redis
+*.rdb
