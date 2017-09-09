@@ -8,11 +8,10 @@ import requests.packages.urllib3.util.ssl_
 requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = 'ALL'
 
 argv = sys.argv
-
 task_msg = Celery( \
         'tasks',
         include=[
-            # 'celeries.fund_huitianfu',
+            'tasks.service.lottery',
         ])
 
 if '--config=production' in argv:
@@ -25,3 +24,6 @@ config = task_msg.conf
 
 if __name__ == '__main__':
     task_msg.start()
+
+
+# celery -A tasks worker -B --loglevel=info -c 1 -n worker
