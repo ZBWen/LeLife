@@ -26,4 +26,4 @@ if __name__ == '__main__':
     task_msg.start()
 
 
-# celery -A tasks worker -B --loglevel=info -c 1 -n worker
+# celery -A tasks worker -B --loglevel=info

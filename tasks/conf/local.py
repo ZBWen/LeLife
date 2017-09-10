@@ -23,9 +23,9 @@ from datetime import timedelta
 from celery.schedules import crontab
 # 定期执行任务
 CELERYBEAT_SCHEDULE = {
-	# 获取新加坡机构列表
+	# 获得指定期号开奖号码
     'select-new-jbK8':{
-        'task': 'tasks.service.lottery.Test',
+        'task': 'tasks.service.lottery.NewPrevekno',
         'schedule': crontab(minute='*/1'),
         "options":{},
         'args': ()
