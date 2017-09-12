@@ -2,14 +2,12 @@
 from tasks.conf.base import *
 
 DATABASES = {
-    'DBHOST': '127.0.0.1',
-    'DBPORT': 3306,
-    'DBUSER': 'root',
-    'DBPWD': 'root',
-    'DBNAME': 'leLife',
-    'DBCHAR':'utf8',
-    'MINCACHED':10,
-    'MAXCACHED':200
+    'host': '127.0.0.1',
+    'port': 3306,
+    'user': 'root',
+    'password': 'root',
+    'db': 'leLife',
+    'charset':'utf8'
 }
 
 BROKER_URL = 'redis://127.0.0.1:6379/0'
@@ -25,7 +23,7 @@ from celery.schedules import crontab
 CELERYBEAT_SCHEDULE = {
 	# 获得指定期号开奖号码
     'select-new-jbK8':{
-        'task': 'tasks.service.lottery.NewPrevekno',
+        'task': 'tasks.service.lottery.NewPrevkeno',
         'schedule': crontab(minute='*/1'),
         "options":{},
         'args': ()
