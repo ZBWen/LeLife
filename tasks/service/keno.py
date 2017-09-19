@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
+import datetime
+
 from pyquery import PyQuery
 
 from tasks.utils.request import open_url
 from tasks.utils.redis import redis_connt
+from tasks.utils.mysql import Mysql
+
 
 # 根据url获取快乐8数据
 def get_prevkeno_list(url):
@@ -11,9 +15,20 @@ def get_prevkeno_list(url):
     table = py('.lott_cont')('table')
     trs = table('tr')
     trs.pop(0)
+    keno_list = []
     for tr in trs.items():
         tds = tr('td')
-        print (tds[0].text)
+        issue = tds[0].text
+        lottery = tds[1].text
+        frisbee = tds[2].text
+        date = tds[3].text
+        keno_list.append({
+            "issue":issue,
+            "lottery":lottery,
+            "frisbee":frisbee,
+            "date":date,
+            })
+    return keno_list
 
 # 获得指定期号开奖号码
 def get_prevkeno(url):
@@ -21,7 +36,7 @@ def get_prevkeno(url):
     lottery = None
     frisbee = None
     date = None
-    html = open_url(url)
+    html = open_url(url,timeout=5)
     py = PyQuery(html)
     table = py('.lott_cont')('table')
     trs = table('tr')
@@ -61,3 +76,13 @@ def set_keno(**kwargs):
     redis_connt.hset(KENO_KEY,'pc_nums',pc_nums)
     redis_connt.hset(KENO_KEY,'pc_sum',pc_sum)
     redis_connt.expire(KENO_KEY, 3600*24*360)
+
+    mysql = Mysql()
+    SQL = "INSERT INTO lottery_bjkeno (issue,nums,frisbee,pc_nums,pc_sum,date,create_date) VALUES ('{}','{}','{}','{}','{}','{}','{}');" \
+        .format(issue,lottery,frisbee,pc_nums,pc_sum,date,datetime.datetime.now())
+    try:
+        mysql.insertOne(SQL)
+        mysql.dispose()
+    except Exception as e:
+        print ('e %s' % e)
+        mysql.dispose(isEnd=0)

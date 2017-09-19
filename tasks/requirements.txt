@@ -4,6 +4,8 @@ redis==2.10.6
 celery==4.1.0
 requests==2.18.4
 pycrypto>=2.6.1
-celery-with-redis==3.0
 PyMySQL==0.7.11
 pyquery>=1.2.9
+
+celery-with-redis==3.0
+

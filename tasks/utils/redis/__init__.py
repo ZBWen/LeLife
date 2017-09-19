@@ -16,5 +16,5 @@ class RedisConnt(redis.Redis):
         value = super(RedisConnt,self).get(key)
         return value if value else kwargs.get('default',value)
 
-pool = redis.ConnectionPool.from_url(config.REDIS_URL)
+pool = redis.ConnectionPool.from_url(config.REDIS_URL,decode_responses=True)
 redis_connt = RedisConnt(connection_pool=pool)

@@ -10,11 +10,11 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
     }
 
-def open_url(url,data=None,headers=headers,POST=False):
+def open_url(url,data=None,headers=headers,POST=False, timeout=15):
     if not POST:
-        req = requests.get(url,headers=headers,timeout=15)
+        req = requests.get(url,headers=headers,timeout=timeout)
     else:
-        req = requests.post(url,data=data,headers=headers,timeout=15)
+        req = requests.post(url,data=data,headers=headers,timeout=timeout)
     if req.status_code == 200:
         html = req.content
     else:

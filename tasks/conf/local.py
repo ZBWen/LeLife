@@ -24,8 +24,17 @@ CELERYBEAT_SCHEDULE = {
 	# 获得指定期号开奖号码
     'select-new-jbK8':{
         'task': 'tasks.service.lottery.NewPrevkeno',
-        'schedule': crontab(minute='*/1'),
+        'schedule': crontab(
+            hour='9,10,11,12,13,14,15,16,17,18,19,20,21,22,23',
+            minute='0,5,10,15,20,25,30,35,40,45,50,55'),
         "options":{},
         'args': ()
     },
+    # # 获得所有历史记录
+    # 'select-history-jbK8':{
+    #     'task': 'tasks.service.lottery.Test',
+    #     'schedule': crontab(hour=20,minute=58),
+    #     "options":{},
+    #     'args': ()
+    # },
 }
