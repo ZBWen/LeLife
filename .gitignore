@@ -10,7 +10,6 @@ Desktop.ini
 public/
 tmp/
 deploy/xml.gz
-web/
 .idea/
 
 #Python:
