@@ -7,4 +7,4 @@ PyMySQL==0.7.11
 pyquery>=1.2.9
 
 django==1.11.5
-django-extensions==1.9.1
+django-extensions==1.9.0
