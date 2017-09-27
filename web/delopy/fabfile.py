@@ -27,7 +27,6 @@ def deployweb():
         run("rm -rf web")
         run("cp -r /mnt/github/leLife/web web")
     with cd("/mnt/deploy/web"):
-        # with path('/mnt/envs/env_web/lib/python3.6/site-packages'):
         run("/mnt/envs/env_web/bin/python manage.py migrate --noinput --settings=web.settings.%s" % env.dj_setting)
         # run("python manage.py clearsessions --settings=visa.settings.%s" % env.dj_setting)
         run("/mnt/envs/env_web/bin/python manage.py collectstatic --noinput --settings=web.settings.%s" % env.dj_setting)
