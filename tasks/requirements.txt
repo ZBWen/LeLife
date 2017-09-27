@@ -1,7 +1,7 @@
 ipdb>=0.7
 rsa==3.4.2
 redis==2.10.6
-celery==4.1.0
+celery<=4.1.0
 requests==2.18.4
 pycrypto>=2.6.1
 PyMySQL==0.7.11
