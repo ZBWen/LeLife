@@ -42,7 +42,7 @@ def backupdb_dl():
     require('dj_setting')
 
     date = time.strftime('%Y%m%d%H%M%S')
-    fname = '/tmp/b51visa-%(database)s-backup-%(date)s.gz' % {
+    fname = '/tmp/leLife-%(database)s-backup-%(date)s.gz' % {
         'database': env.dbname,
         'date': date,
     }
@@ -72,7 +72,7 @@ def tcbackupdb_nodl():
     require('dj_setting')
 
     date = time.strftime('%Y%m%d%H%M%S')
-    fname = '/tmp/b51visa-%(database)s-backup-%(date)s.gz' % {
+    fname = '/tmp/leLife-%(database)s-backup-%(date)s.gz' % {
         'database': env.dbname,
         'date': date,
     }
