@@ -30,7 +30,7 @@ def deployweb():
         run("/mnt/envs/env_web/bin/python manage.py migrate --noinput --settings=web.settings.%s" % env.dj_setting)
         # run("python manage.py clearsessions --settings=visa.settings.%s" % env.dj_setting)
         run("/mnt/envs/env_web/bin/python manage.py collectstatic --noinput --settings=web.settings.%s" % env.dj_setting)
-        # run("sudo supervisorctl start 51visa_uwsgi")
+        run("sudo supervisorctl restart web")
 
 def backupdb_dl():
     #db backup
