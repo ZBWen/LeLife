@@ -43,10 +43,10 @@ class Test(task_msg.Task):
     default_retry_delay = 0
 
     def run(self, *args, **kwargs):
-        PAGE = int(redis_connt.get('PREVKENO_PAGE',default=14994))
+        PAGE = int(redis_connt.get('PREVKENO_PAGE',default=14995))
         while PAGE:
             print (PAGE)
-            return
+            raise Exception('ERROR----->EROOR')
             try:
                 last_keno = int(redis_connt.get('LAST_KENO',default=0))
                 URL = 'http://www.bwlc.net/bulletin/prevkeno.html?page={}'.format(PAGE)
