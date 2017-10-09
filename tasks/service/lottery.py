@@ -46,6 +46,7 @@ class Test(task_msg.Task):
         PAGE = int(redis_connt.get('PREVKENO_PAGE',default=14994))
         while PAGE:
             print (PAGE)
+            return
             try:
                 last_keno = int(redis_connt.get('LAST_KENO',default=0))
                 URL = 'http://www.bwlc.net/bulletin/prevkeno.html?page={}'.format(PAGE)
