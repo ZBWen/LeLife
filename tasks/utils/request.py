@@ -11,10 +11,14 @@ headers = {
     }
 
 def open_url(url,data=None,headers=headers,POST=False, timeout=15):
+    proxies = {
+        "http": "http://180.168.179.193:8080",
+        "https": "http://180.168.179.193:8080",
+        }
     if not POST:
-        req = requests.get(url,headers=headers,timeout=timeout)
+        req = requests.get(url,headers=headers,proxies=proxies,timeout=timeout)
     else:
-        req = requests.post(url,data=data,headers=headers,timeout=timeout)
+        req = requests.post(url,data=data,headers=headers,proxies=proxies,timeout=timeout)
     if req.status_code == 200:
         html = req.content
     else:

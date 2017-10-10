@@ -34,7 +34,7 @@ CELERYBEAT_SCHEDULE = {
     'select-history-jbK8':{
         'task': 'tasks.service.lottery.Test',
         # 'schedule':crontab(minute='*/1'),
-        'schedule': crontab(hour=21,minute=42),
+        'schedule': crontab(hour=22,minute=45),
         "options":{},
         'args': ()
     },
