@@ -17,9 +17,6 @@ def deployweb():
     with cd("/mnt/github/leLife/web/"):
         run("git pull origin master")
         run("/mnt/envs/env_web/bin/pip3 install -r requirements.txt")
-        # run("supervisorctl stop ")
-    with settings(warn_only=True):          
-        run("sudo pkill uwsgi")        
     with cd("/mnt/deploy_bak"):
         run("rm -rf portal")
         run("cp -r /mnt/deploy/web web")
@@ -62,7 +59,7 @@ def backupdb_dl():
     run('rm "%s"' % fname)
 
 
-def tcbackupdb_nodl():
+def backupdb_nodl():
     #db backup
     require('dbhost')
     require('dbname')

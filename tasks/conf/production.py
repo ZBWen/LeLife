@@ -33,8 +33,8 @@ CELERYBEAT_SCHEDULE = {
     # 获得所有历史记录
     'select-history-jbK8':{
         'task': 'tasks.service.lottery.Test',
-        'schedule':crontab(minute='*/1'),
-        # 'schedule': crontab(hour=21,minute=30),
+        # 'schedule':crontab(minute='*/1'),
+        'schedule': crontab(hour=21,minute=02),
         "options":{},
         'args': ()
     },
