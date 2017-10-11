@@ -43,14 +43,14 @@ class Test(task_msg.Task):
     default_retry_delay = 0
 
     def run(self, *args, **kwargs):
-        PAGE = int(redis_connt.get('PREVKENO_PAGE',default=15001))
+        PAGE = int(redis_connt.get('PREVKENO_PAGE',default=15007))
         while PAGE:
             print (PAGE)
             try:
                 last_keno = int(redis_connt.get('LAST_KENO',default=0))
                 URL = 'http://www.bwlc.net/bulletin/prevkeno.html?page={}'.format(PAGE)
                 data_list = get_prevkeno_list(URL)
-                set_page = redis_connt.get('PREVKENO_PAGE',default=15001)
+                set_page = redis_connt.get('PREVKENO_PAGE',default=15007)
                 if int(set_page) == PAGE:
                     for data in data_list:
                         issue = data['issue']
