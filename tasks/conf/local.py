@@ -25,7 +25,7 @@ CELERYBEAT_SCHEDULE = {
     'ref_ip':{
         'task': 'tasks.utils.proxies.RefreshProxies',
         'schedule': crontab(
-            minute='0,5,10,15,20,25,30,35,40,45,50,53'),
+            minute='0,5,10,15,20,25,30,35,40,45,50,56'),
         "options":{},
         'args': ()
     },
@@ -38,11 +38,11 @@ CELERYBEAT_SCHEDULE = {
  #        "options":{},
  #        'args': ()
  #    },
-    # # 获得所有历史记录
-    # 'select-history-jbK8':{
-    #     'task': 'tasks.service.lottery.Test',
-    #     'schedule': crontab(hour=20,minute=58),
-    #     "options":{},
-    #     'args': ()
-    # },
+    # 获得所有历史记录
+    'select-history-jbK8':{
+        'task': 'tasks.service.lottery.Test',
+        'schedule': crontab(hour=22,minute=57),
+        "options":{},
+        'args': ()
+    },
 }

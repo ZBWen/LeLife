@@ -64,4 +64,4 @@ class Test(task_msg.Task):
                     PAGE -=1
                     redis_connt.set('PREVKENO_PAGE',PAGE)
             except Exception as e:
-                print (u'%s' % e.message)
+                print (u'%s' % e)

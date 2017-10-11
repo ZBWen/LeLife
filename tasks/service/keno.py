@@ -13,13 +13,19 @@ def get_prevkeno_list(url):
     proxie_list = redis_connt.lrange('PROXIES_IP', 0, -1)
     for proxie in proxie_list:
         proxies = {
-            "http": proxie,
-            "https": proxie,
+            "http": u'http://{}'.format(proxie),
+            "https": u'https://{}'.format(proxie),
             }
         try:
-            html = open_url(url,proxies=proxies)
+            html = open_url(url,proxies=proxies,timeout=10)
         except requests.exceptions.ConnectTimeout:
+            redis_connt.lrem('PROXIES_IP',proxie,0)
             continue
+        except requests.exceptions.ConnectionError:
+            redis_connt.lrem('PROXIES_IP',proxie,0)
+            print ('ConnectionError')
+            continue
+
         py = PyQuery(html)
         table = py('.lott_cont')('table')
         trs = table('tr')
@@ -37,6 +43,7 @@ def get_prevkeno_list(url):
                 "frisbee":frisbee,
                 "date":date,
                 })
+        break
     return keno_list
 
 # 获得指定期号开奖号码
@@ -48,12 +55,15 @@ def get_prevkeno(url):
     proxie_list = redis_connt.lrange('PROXIES_IP', 0, -1)
     for proxie in proxie_list:
         proxies = {
-            "http": proxie,
-            "https": proxie,
+            "http": u'http://{}'.format(proxie),
+            "https": u'https://{}'.format(proxie),
             }
         try:
             html = open_url(url,proxies=proxies,timeout=5)
         except requests.exceptions.ConnectTimeout:
+            redis_connt.lrem('PROXIES_IP',proxie,0)
+            continue
+        except requests.exceptions.ConnectionError:
             continue
         py = PyQuery(html)
         table = py('.lott_cont')('table')
@@ -65,6 +75,7 @@ def get_prevkeno(url):
             lottery = tds[1].text
             frisbee = tds[2].text
             date = tds[3].text
+        break
     return issue, lottery, frisbee, date
 
 # pc28 num
