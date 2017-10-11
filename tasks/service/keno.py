@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
+import requests
 import datetime
-
 from pyquery import PyQuery
 
 from tasks.utils.request import open_url
@@ -10,24 +10,33 @@ from tasks.utils.mysql import Mysql
 
 # 根据url获取快乐8数据
 def get_prevkeno_list(url):
-    html = open_url(url)
-    py = PyQuery(html)
-    table = py('.lott_cont')('table')
-    trs = table('tr')
-    trs.pop(0)
-    keno_list = []
-    for tr in trs.items():
-        tds = tr('td')
-        issue = tds[0].text
-        lottery = tds[1].text
-        frisbee = tds[2].text
-        date = tds[3].text
-        keno_list.append({
-            "issue":issue,
-            "lottery":lottery,
-            "frisbee":frisbee,
-            "date":date,
-            })
+    proxie_list = redis_connt.lrange('PROXIES_IP', 0, -1)
+    for proxie in proxie_list:
+        proxies = {
+            "http": proxie,
+            "https": proxie,
+            }
+        try:
+            html = open_url(url,proxies=proxies)
+        except requests.exceptions.ConnectTimeout:
+            continue
+        py = PyQuery(html)
+        table = py('.lott_cont')('table')
+        trs = table('tr')
+        trs.pop(0)
+        keno_list = []
+        for tr in trs.items():
+            tds = tr('td')
+            issue = tds[0].text
+            lottery = tds[1].text
+            frisbee = tds[2].text
+            date = tds[3].text
+            keno_list.append({
+                "issue":issue,
+                "lottery":lottery,
+                "frisbee":frisbee,
+                "date":date,
+                })
     return keno_list
 
 # 获得指定期号开奖号码
@@ -36,17 +45,26 @@ def get_prevkeno(url):
     lottery = None
     frisbee = None
     date = None
-    html = open_url(url,timeout=5)
-    py = PyQuery(html)
-    table = py('.lott_cont')('table')
-    trs = table('tr')
-    trs.pop(0)
-    for tr in trs.items():
-        tds = tr('td')
-        issue = tds[0].text
-        lottery = tds[1].text
-        frisbee = tds[2].text
-        date = tds[3].text
+    proxie_list = redis_connt.lrange('PROXIES_IP', 0, -1)
+    for proxie in proxie_list:
+        proxies = {
+            "http": proxie,
+            "https": proxie,
+            }
+        try:
+            html = open_url(url,proxies=proxies,timeout=5)
+        except requests.exceptions.ConnectTimeout:
+            continue
+        py = PyQuery(html)
+        table = py('.lott_cont')('table')
+        trs = table('tr')
+        trs.pop(0)
+        for tr in trs.items():
+            tds = tr('td')
+            issue = tds[0].text
+            lottery = tds[1].text
+            frisbee = tds[2].text
+            date = tds[3].text
     return issue, lottery, frisbee, date
 
 # pc28 num

@@ -21,6 +21,15 @@ from datetime import timedelta
 from celery.schedules import crontab
 # 定期执行任务
 CELERYBEAT_SCHEDULE = {
+    # 刷新代理http
+    'ref_ip':{
+        'task': 'tasks.utils.proxies.RefreshProxies',
+        'schedule': crontab(
+            hour='8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23',
+            minute='0,10,20,30,40,50'),
+        "options":{},
+        'args': ()
+    },
 	# 获得指定期号开奖号码
     # 'select-new-jbK8':{
     #     'task': 'tasks.service.lottery.NewPrevkeno',
@@ -34,7 +43,7 @@ CELERYBEAT_SCHEDULE = {
     'select-history-jbK8':{
         'task': 'tasks.service.lottery.Test',
         # 'schedule':crontab(minute='*/1'),
-        'schedule': crontab(hour=22,minute=45),
+        'schedule': crontab(hour=22,minute=15),
         "options":{},
         'args': ()
     },

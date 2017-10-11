@@ -11,6 +11,7 @@ argv = sys.argv
 task_msg = Celery( \
         'tasks',
         include=[
+         	'tasks.utils.proxies',
             'tasks.service.lottery',
         ])
 
