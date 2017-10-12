@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import time
 import requests
 import datetime
 from pyquery import PyQuery
@@ -29,6 +30,8 @@ def get_prevkeno_list(url):
         py = PyQuery(html)
         table = py('.lott_cont')('table')
         trs = table('tr')
+        if not len(trs):
+            time.sleep(10)
         trs.pop(0)
         keno_list = []
         for tr in trs.items():
