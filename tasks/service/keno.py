@@ -17,7 +17,7 @@ def get_prevkeno_list(url):
             "https": u'https://{}'.format(proxie),
             }
         try:
-            html = open_url(url,proxies=proxies,timeout=10)
+            html = open_url(url,proxies=proxies,timeout=15)
         except requests.exceptions.ConnectTimeout:
             redis_connt.lrem('PROXIES_IP',proxie,0)
             continue
