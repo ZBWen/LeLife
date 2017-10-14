@@ -22,8 +22,6 @@ class NewPrevkeno(task_msg.Task):
                     time.sleep(3)
                     URL = 'http://www.bwlc.net/bulletin/prevkeno.html?num={}'.format(NUM)
                     issue, lottery, frisbee, date = get_prevkeno(URL)
-                if issue:
-                    break
             nums = pc28_num(lottery.split(','))
             set_issue = redis_connt.get('NEW_PREVKENO',default=850555)
             if set_issue == issue:
