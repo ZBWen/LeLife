@@ -57,7 +57,7 @@ def get_prevkeno(url):
     lottery = None
     frisbee = None
     date = None
-    print url
+    print (url)
     html = open_url(url,use_proxies=True,timeout=15)
     print (html)
     py = PyQuery(html)
