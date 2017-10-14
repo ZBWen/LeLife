@@ -57,9 +57,8 @@ def get_prevkeno(url):
     lottery = None
     frisbee = None
     date = None
-    print (url)
     html = open_url(url,use_proxies=True,timeout=15)
-    print (html)
+    print (url)
     py = PyQuery(html)
     table = py('.lott_cont')('table')
     trs = table('tr')

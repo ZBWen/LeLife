@@ -25,9 +25,8 @@ class NewPrevkeno(task_msg.Task):
                 else:
                     break
             nums = pc28_num(lottery.split(','))
-            set_issue = redis_connt.get('NEW_PREVKENO',default=850555)
-            print (set_issue == issue)
-            if set_issue == issue:
+            print (NUM == issue)
+            if NUM == issue:
                 set_keno(
                     issue=issue,
                     lottery=lottery,
