@@ -58,6 +58,7 @@ def get_prevkeno(url):
     frisbee = None
     date = None
     proxie_list = redis_connt.lrange('PROXIES_IP', 0, -1)
+    print ('proxie:{}'.format(len(proxie_list)))
     for proxie in proxie_list:
         proxies = {
             "http": u'http://{}'.format(proxie),
@@ -69,6 +70,10 @@ def get_prevkeno(url):
             redis_connt.lrem('PROXIES_IP',proxie,0)
             continue
         except requests.exceptions.ConnectionError:
+            redis_connt.lrem('PROXIES_IP',proxie,0)
+            continue
+        except Exception as e:
+            print (e)
             continue
         py = PyQuery(html)
         table = py('.lott_cont')('table')
