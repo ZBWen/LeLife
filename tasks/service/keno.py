@@ -78,6 +78,7 @@ def get_prevkeno(url):
         py = PyQuery(html)
         table = py('.lott_cont')('table')
         trs = table('tr')
+        print (len(trs))
         if not len(trs):
             continue
         trs.pop(0)
