@@ -73,7 +73,6 @@ def get_prevkeno(url):
             redis_connt.lrem('PROXIES_IP',proxie,0)
             continue
         except Exception as e:
-            print (e)
             continue
         py = PyQuery(html)
         table = py('.lott_cont')('table')

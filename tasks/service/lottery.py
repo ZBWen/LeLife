@@ -24,6 +24,9 @@ class NewPrevkeno(task_msg.Task):
                     issue, lottery, frisbee, date = get_prevkeno(URL)
             nums = pc28_num(lottery.split(','))
             set_issue = redis_connt.get('NEW_PREVKENO',default=850555)
+
+            print set_issue
+            print issue
             if set_issue == issue:
                 set_keno(
                     issue=issue,
