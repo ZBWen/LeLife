@@ -64,7 +64,7 @@ def get_prevkeno(url):
             "https": u'https://{}'.format(proxie),
             }
         try:
-            html = open_url(url,proxies=proxies,timeout=5)
+            html = open_url(url,proxies=proxies,timeout=10)
         except requests.exceptions.ConnectTimeout:
             redis_connt.lrem('PROXIES_IP',proxie,0)
             continue
@@ -73,6 +73,8 @@ def get_prevkeno(url):
         py = PyQuery(html)
         table = py('.lott_cont')('table')
         trs = table('tr')
+        if not len(trs):
+            continue
         trs.pop(0)
         for tr in trs.items():
             tds = tr('td')
