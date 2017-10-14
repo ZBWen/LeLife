@@ -13,7 +13,7 @@ class NewPrevkeno(task_msg.Task):
 
     def run(self, *args, **kwargs):
         issue = None
-        NUM = redis_connt.get('NEW_PREVKENO',default=845809)
+        NUM = redis_connt.get('NEW_PREVKENO',default=850555)
         if NUM:
             while True:
                 URL = 'http://www.bwlc.net/bulletin/keno.html?num={}'.format(NUM)
@@ -25,7 +25,7 @@ class NewPrevkeno(task_msg.Task):
                 if issue:
                     break
             nums = pc28_num(lottery.split(','))
-            set_issue = redis_connt.get('NEW_PREVKENO',default=845809)
+            set_issue = redis_connt.get('NEW_PREVKENO',default=850555)
             if set_issue == issue:
                 set_keno(
                     issue=issue,
