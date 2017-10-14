@@ -30,7 +30,7 @@ CELERYBEAT_SCHEDULE = {
         "options":{},
         'args': ()
     },
-	获得指定期号开奖号码
+	# 获得指定期号开奖号码
     'select-new-jbK8':{
         'task': 'tasks.service.lottery.NewPrevkeno',
         'schedule': crontab(
