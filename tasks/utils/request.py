@@ -24,6 +24,7 @@ def open_url(url,data=None,headers=headers,
                 "https": u'https://{}'.format(proxie),
                 }
         try:
+            print (url)
             if not POST:
                 req = requests.get(url,headers=headers,proxies=proxies,timeout=timeout)
             else:
@@ -43,4 +44,5 @@ def open_url(url,data=None,headers=headers,
                 continue
             else:
                 raise Exception(e)
-    return html
+        break
+     return html

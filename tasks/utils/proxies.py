@@ -17,6 +17,7 @@ class RefreshProxies(task_msg.Task):
         ip_list = []
         try:
             html =open_url('http://www.xicidaili.com/nn/',use_proxies=True)
+            print (html)
             pq = PyQuery(html)
             trs = pq('#ip_list')('tr')
             trs.pop() # remove first
@@ -31,6 +32,7 @@ class RefreshProxies(task_msg.Task):
 
         try:
             html = open_url('http://www.goubanjia.com/free/gngn/index1.shtml',use_proxies=True)
+            print (html)
             pq = PyQuery(html)
             trs = pq('#list')('.table')('tbody')('tr')
             for tr in trs.items():
