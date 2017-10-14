@@ -59,7 +59,7 @@ def get_prevkeno(url):
     date = None
 
     html = open_url(url,use_proxies=True,timeout=10)
-    print html
+    print (html)
     py = PyQuery(html)
     table = py('.lott_cont')('table')
     trs = table('tr')
