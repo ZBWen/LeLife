@@ -57,38 +57,19 @@ def get_prevkeno(url):
     lottery = None
     frisbee = None
     date = None
-    proxie_list = redis_connt.lrange('PROXIES_IP', 0, -1)
-    print ('proxie:{}'.format(len(proxie_list)))
-    for proxie in proxie_list:
-        proxies = {
-            "http": u'http://{}'.format(proxie),
-            "https": u'https://{}'.format(proxie),
-            }
-        try:
-            html = open_url(url,proxies=proxies,timeout=10)
-        except requests.exceptions.ConnectTimeout:
-            redis_connt.lrem('PROXIES_IP',proxie,0)
-            continue
-        except requests.exceptions.ConnectionError:
-            redis_connt.lrem('PROXIES_IP',proxie,0)
-            continue
-        except Exception as e:
-            print (u'open_url ERROR:{}'.format(e))
-            continue
-        py = PyQuery(html)
-        table = py('.lott_cont')('table')
-        trs = table('tr')
-        if not len(trs):
-            print (html)
-            continue
-        trs.pop(0)
-        for tr in trs.items():
-            tds = tr('td')
-            issue = tds[0].text
-            lottery = tds[1].text
-            frisbee = tds[2].text
-            date = tds[3].text
-        break
+
+    html = open_url(url,use_proxies=True,timeout=10)
+    print html
+    py = PyQuery(html)
+    table = py('.lott_cont')('table')
+    trs = table('tr')
+    trs.pop(0)
+    for tr in trs.items():
+        tds = tr('td')
+        issue = tds[0].text
+        lottery = tds[1].text
+        frisbee = tds[2].text
+        date = tds[3].text
     return issue, lottery, frisbee, date
 
 # pc28 num

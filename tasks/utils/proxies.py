@@ -16,7 +16,7 @@ class RefreshProxies(task_msg.Task):
     def run(self, *args, **kwargs):
         ip_list = []
         try:
-            html =open_url('http://www.xicidaili.com/nn/')
+            html =open_url('http://www.xicidaili.com/nn/',use_proxies=True)
             pq = PyQuery(html)
             trs = pq('#ip_list')('tr')
             trs.pop() # remove first
@@ -30,7 +30,7 @@ class RefreshProxies(task_msg.Task):
             print (e)
 
         try:
-            html = open_url('http://www.goubanjia.com/free/gngn/index1.shtml')
+            html = open_url('http://www.goubanjia.com/free/gngn/index1.shtml',use_proxies=True)
             pq = PyQuery(html)
             trs = pq('#list')('.table')('tbody')('tr')
             for tr in trs.items():

@@ -26,7 +26,7 @@ CELERYBEAT_SCHEDULE = {
         'task': 'tasks.utils.proxies.RefreshProxies',
         'schedule': crontab(
             # hour='8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23',
-            minute='0,10,20,30,40,50'),
+            minute='0,5,10,15,20,25,30,35,40,45,50,55'),
         "options":{},
         'args': ()
     },
