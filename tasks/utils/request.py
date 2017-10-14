@@ -20,4 +20,5 @@ def open_url(url,data=None,headers=headers,proxies={},POST=False, timeout=15):
     else:
         print (url)
         print (req.status_code)
+        raise Exception('status_code error:{}'.format(req.status_code))
     return html

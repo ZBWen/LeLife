@@ -8,7 +8,6 @@ from tasks.utils.request import open_url
 from tasks.utils.redis import redis_connt
 from tasks.utils.mysql import Mysql
 
-
 # 根据url获取快乐8数据
 def get_prevkeno_list(url):
     keno_list = []
@@ -24,7 +23,11 @@ def get_prevkeno_list(url):
             redis_connt.lrem('PROXIES_IP',proxie,0)
             continue
         except requests.exceptions.ConnectionError:
+            redis_connt.lrem('PROXIES_IP',proxie,0)
             print ('ConnectionError')
+            continue
+        except Exception as e:
+            print (e)
             continue
 
         py = PyQuery(html)
