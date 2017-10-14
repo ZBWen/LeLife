@@ -25,6 +25,8 @@ class NewPrevkeno(task_msg.Task):
                 else:
                     break
             nums = pc28_num(lottery.split(','))
+            print (issue,type(issue))
+            print (NUM,type(NUM))
             print (NUM == issue)
             if NUM == issue:
                 set_keno(
