@@ -53,5 +53,5 @@ class RefreshProxies(task_msg.Task):
             print (e)
 
         redis_connt.delete('PROXIES_IP')
-            for ip in ip_list:
-                redis_connt.lpush('PROXIES_IP',ip)
+        for ip in ip_list:
+            redis_connt.lpush('PROXIES_IP',ip)
