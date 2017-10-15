@@ -6,7 +6,7 @@ from pyquery import PyQuery
 
 from tasks import config
 from tasks import task_msg
-from tasks.utils.request import open_url
+from tasks.utils.request import Request
 from tasks.utils.redis import redis_connt
 
 class RefreshProxies(task_msg.Task):
@@ -16,7 +16,7 @@ class RefreshProxies(task_msg.Task):
     def run(self, *args, **kwargs):
         ip_list = []
         try:
-            html =open_url('http://www.xicidaili.com/nn/',use_proxies=True)
+            html = Request().open_url('http://www.xicidaili.com/nn/')
             pq = PyQuery(html)
             trs = pq('#ip_list')('tr')
             trs.pop() # remove first
@@ -30,7 +30,7 @@ class RefreshProxies(task_msg.Task):
             print (e)
 
         try:
-            html = open_url('http://www.goubanjia.com/free/gngn/index1.shtml',use_proxies=True)
+            html = Request().open_url('http://www.goubanjia.com/free/gngn/index1.shtml')
             pq = PyQuery(html)
             trs = pq('#list')('.table')('tbody')('tr')
             for tr in trs.items():
@@ -41,7 +41,7 @@ class RefreshProxies(task_msg.Task):
             print (e)
 
         try:
-            html = open_url('http://www.kuaidaili.com/free/intr/1/',use_proxies=True)
+            html = Request().open_url('http://www.kuaidaili.com/free/intr/1/')
             pq = PyQuery(html)
             trs = pq('#list')('.table')('tbody')('tr')
             for tr in trs.items():

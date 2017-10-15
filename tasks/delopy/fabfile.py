@@ -4,12 +4,7 @@ import time
 
 #deploy script for QCLOUD
 def production():
-    env.hosts=['47.52.91.196']
-    env.dbhost='127.0.0.1'
-    env.dbname='leLife'
-    env.dbuser='root'
-    env.dbpass='root'
-    env.dbport='3306'
+    env.hosts=['101.132.146.191']
     env.dj_setting='production'
 
 def deploy():

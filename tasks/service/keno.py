@@ -4,51 +4,30 @@ import requests
 import datetime
 from pyquery import PyQuery
 
-from tasks.utils.request import open_url
+from tasks.utils.request import Request
 from tasks.utils.redis import redis_connt
 from tasks.utils.mysql import Mysql
 
 # 根据url获取快乐8数据
 def get_prevkeno_list(url):
     keno_list = []
-    proxie_list = redis_connt.lrange('PROXIES_IP', 0, -1)
-    for proxie in proxie_list:
-        proxies = {
-            "http": u'http://{}'.format(proxie),
-            "https": u'https://{}'.format(proxie),
-            }
-        try:
-            html = open_url(url,proxies=proxies,timeout=15)
-        except requests.exceptions.ConnectTimeout:
-            redis_connt.lrem('PROXIES_IP',proxie,0)
-            continue
-        except requests.exceptions.ConnectionError:
-            redis_connt.lrem('PROXIES_IP',proxie,0)
-            print ('ConnectionError')
-            continue
-        except Exception as e:
-            print (e)
-            continue
-
-        py = PyQuery(html)
-        table = py('.lott_cont')('table')
-        trs = table('tr')
-        if not len(trs):
-            continue
-        trs.pop(0)
-        for tr in trs.items():
-            tds = tr('td')
-            issue = tds[0].text
-            lottery = tds[1].text
-            frisbee = tds[2].text
-            date = tds[3].text
-            keno_list.append({
-                "issue":issue,
-                "lottery":lottery,
-                "frisbee":frisbee,
-                "date":date,
-                })
-        break
+    html = Request().open_url(url,timeout=15)
+    py = PyQuery(html)
+    table = py('.lott_cont')('table')
+    trs = table('tr')
+    trs.pop(0)
+    for tr in trs.items():
+        tds = tr('td')
+        issue = tds[0].text
+        lottery = tds[1].text
+        frisbee = tds[2].text
+        date = tds[3].text
+        keno_list.append({
+            "issue":issue,
+            "lottery":lottery,
+            "frisbee":frisbee,
+            "date":date,
+            })
     return keno_list
 
 # 获得指定期号开奖号码
@@ -57,7 +36,7 @@ def get_prevkeno(url):
     lottery = None
     frisbee = None
     date = None
-    html = open_url(url,use_proxies=True,timeout=15)
+    html = Request().open_url(url,timeout=15)
     print (url)
     py = PyQuery(html)
     table = py('.lott_cont')('table')
