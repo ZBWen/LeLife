@@ -40,7 +40,7 @@ class NewPrevkeno(task_msg.Task):
                     date=date,
                     pc_nums=nums,
                     pc_sum=sum(nums))
-                print (set_keno,int(issue)+1)
+                print (int(issue)+1)
                 # 更新 新的待获取期号
                 redis_connt.set('NEW_PREVKENO',int(issue)+1)
                 redis_connt.expire('NEW_PREVKENO', 3600*24*7)
