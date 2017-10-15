@@ -4,8 +4,8 @@ from tasks.conf.base import *
 DATABASES = {
     'host': '47.52.91.196',
     'port': 3306,
-    'user': 'root',
-    'password': 'root',
+    'user': 'Zbwen',
+    'password': 'zhang360892272',
     'db': 'leLife',
     'charset':'utf8'
 }
