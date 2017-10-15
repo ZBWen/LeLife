@@ -30,6 +30,7 @@ class NewPrevkeno(task_msg.Task):
                 issue, lottery, frisbee, date = get_prevkeno(URL)
                 if issue:
                     break
+            print (issue, lottery, frisbee, date)
             nums = pc28_num(lottery.split(','))
             if str(NUM) == str(issue):
                 set_keno(
