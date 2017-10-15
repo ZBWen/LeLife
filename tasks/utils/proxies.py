@@ -37,9 +37,21 @@ class RefreshProxies(task_msg.Task):
                 td_ip = tr.eq(0)('td').eq(0)
                 ip = td_ip.remove('p').text().replace(' ','')
                 ip_list.append(ip)
-                    
-            redis_connt.delete('PROXIES_IP')
-            for ip in ip_list:
-                redis_connt.lpush('PROXIES_IP',ip)
         except Exception as e:
             print (e)
+
+        try:
+            html = open_url('http://www.kuaidaili.com/free/intr/1/',use_proxies=True)
+            pq = PyQuery(html)
+            trs = pq('#list')('.table')('tbody')('tr')
+            for tr in trs.items():
+                tds = tr('td')
+                ip = '{}:{}'.format(tds.eq(0).text(),tds.eq(1).text())
+                ip_list.append(ip)
+                print (ip)
+        except Exception as e:
+            print (e)
+
+        redis_connt.delete('PROXIES_IP')
+            for ip in ip_list:
+                redis_connt.lpush('PROXIES_IP',ip)
