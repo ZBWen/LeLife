@@ -2,7 +2,7 @@
 from tasks.conf.base import *
 
 DATABASES = {
-    'host': '127.0.0.1',
+    'host': '47.52.91.196',
     'port': 3306,
     'user': 'root',
     'password': 'root',
