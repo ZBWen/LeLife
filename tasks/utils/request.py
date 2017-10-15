@@ -18,12 +18,14 @@ def open_url(url,data=None,headers=headers,
     if use_proxies:
         proxie_list = redis_connt.lrange('PROXIES_IP', 0, -1)
     for proxie in proxie_list:
+        print ('proxie')
         if proxie:
             proxies = {
                 "http": u'http://{}'.format(proxie),
                 "https": u'https://{}'.format(proxie),
                 }
         try:
+            print ('try')
             if not POST:
                 req = requests.get(url,headers=headers,proxies=proxies,timeout=timeout)
             else:
