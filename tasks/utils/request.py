@@ -17,6 +17,7 @@ def open_url(url,data=None,headers=headers,
     proxie_list = [None]
     if use_proxies:
         proxie_list = redis_connt.lrange('PROXIES_IP', 0, -1)
+    print (proxie_list)
     for proxie in proxie_list:
         print ('proxie')
         if proxie:
