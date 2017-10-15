@@ -28,7 +28,7 @@ class NewPrevkeno(task_msg.Task):
                 time.sleep(2)
                 URL = 'http://www.bwlc.net/bulletin/keno.html'
                 issue, lottery, frisbee, date = get_prevkeno(URL)
-                if issue:
+                if issue and str(NUM) == str(issue):
                     break
             print (issue, lottery, frisbee, date)
             nums = pc28_num(lottery.split(','))
