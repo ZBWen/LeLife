@@ -18,11 +18,17 @@ class NewPrevkeno(task_msg.Task):
             while True:
                 URL = 'http://www.bwlc.net/bulletin/keno.html?num={}'.format(NUM)
                 issue, lottery, frisbee, date = get_prevkeno(URL)
-                if not issue:
-                    time.sleep(3)
-                    URL = 'http://www.bwlc.net/bulletin/prevkeno.html?num={}'.format(NUM)
-                    issue, lottery, frisbee, date = get_prevkeno(URL)
-                else:
+                if issue:
+                    break
+                time.sleep(2)
+                URL = 'http://www.bwlc.net/bulletin/prevkeno.html?num={}'.format(NUM)
+                issue, lottery, frisbee, date = get_prevkeno(URL)
+                if issue:
+                    break
+                time.sleep(2)
+                URL = 'http://www.bwlc.net/bulletin/keno.html'
+                issue, lottery, frisbee, date = get_prevkeno(URL)
+                if issue:
                     break
             nums = pc28_num(lottery.split(','))
             if str(NUM) == str(issue):
