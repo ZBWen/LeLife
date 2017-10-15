@@ -27,7 +27,7 @@ class Request(object):
         req = requests.post(url,data=data,headers=headers,proxies=proxies,timeout=timeout)
         return req
 
-    def open_url(url,data=None,headers=headers,
+    def open_url(self, url,data=None,headers=headers,
                         proxies={}, POST=False, use_proxies=False, timeout=15):
         kwargs = {
             "headers":headers,
