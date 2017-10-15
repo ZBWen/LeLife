@@ -28,7 +28,7 @@ def open_url(url,data=None,headers=headers,
                 req = requests.get(url,headers=headers,proxies=proxies,timeout=timeout)
             else:
                 req = requests.post(url,data=data,headers=headers,proxies=proxies,timeout=timeout)
-            print req
+            print (req)
             if req.status_code == 200:
                 html = req.content
             else:
