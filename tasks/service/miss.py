@@ -23,6 +23,7 @@ class Prevkeno(object):
                 WHERE lottery_type={} 
                 ORDER BY -issue;
             '''.format(KBKE)
+        print (MISS_SQL)
         result = mysql.getOne(MISS_SQL)
         if result:
            issue = int(result['issue'])
@@ -35,10 +36,10 @@ class Prevkeno(object):
                 WHERE issue>{} 
                 ORDER BY issue;
             '''.format(issue)
-
+        print (SELECT_SQL)
         result = mysql.getAll(SELECT_SQL)
         try:
-            for info in result[:10000]:
+            for info in result[:1000]:
                 if res_issue == int(info['issue']):
                     # 删除重复的数据
                     DELETE_SQL = '''
