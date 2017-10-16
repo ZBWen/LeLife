@@ -15,12 +15,27 @@ class Prevkeno(object):
         res_issue = 0
         last_issue = int(redis_connt.get('NEW_PREVKENO',default=0))
         mysql = Mysql()
-        MISS_SQL = 'SELECT issue FROM lottery_lotterymiss WHERE lottery_type={} ORDER BY -issue;'.format(KBKE)
+        MISS_SQL = '''
+                SELECT 
+                    issue 
+                FROM 
+                    lottery_lotterymiss 
+                WHERE lottery_type={} 
+                ORDER BY -issue;
+            '''.format(KBKE)
         result = mysql.getOne(MISS_SQL)
         if result:
            issue = int(result['issue'])
 
-        SELECT_SQL = "SELECT issue FROM lottery_bjkeno WHERE issue>{} ORDER BY issue;".format(issue)
+        SELECT_SQL = '''
+                SELECT 
+                    issue 
+                FROM 
+                    lottery_bjkeno 
+                WHERE issue>{} 
+                ORDER BY issue;
+            '''.format(issue)
+
         result = mysql.getAll(SELECT_SQL)
         try:
             for info in result:
