@@ -15,13 +15,13 @@ class NewPrevkeno(task_msg.Task):
     def run(self, *args, **kwargs):
         issue = None
         NUM = redis_connt.get('NEW_PREVKENO',default=850555)
+        print (NUM)
         if NUM:
             count = 0
             while True:
                 count += 1
                 if count > 20:
                     break
-                print (NUM)
                 try:
                     URL = 'http://www.bwlc.net/bulletin/keno.html?num={}'.format(NUM)
                     issue, lottery, frisbee, date = get_prevkeno(URL)
