@@ -85,5 +85,6 @@ def set_keno(**kwargs):
         mysql.insertOne(SQL)
         mysql.dispose()
     except Exception as e:
-        print ('e %s' % e)
+        print (SQL)
+        print (' %s' % e)
         mysql.dispose(isEnd=0)
