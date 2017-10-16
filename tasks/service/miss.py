@@ -40,6 +40,8 @@ class Prevkeno(object):
         print (len(result))
         try:
             for info in result[:1000]:
+                if not issue:
+                    issue = int(info['issue']
                 if res_issue == int(info['issue']):
                     print ('delete:{}'.format(res_issue))
                     # 删除重复的数据
