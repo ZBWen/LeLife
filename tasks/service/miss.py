@@ -38,7 +38,7 @@ class Prevkeno(object):
 
         result = mysql.getAll(SELECT_SQL)
         try:
-            for info in result:
+            for info in result[:10000]:
                 if res_issue == int(info['issue']):
                     # 删除重复的数据
                     DELETE_SQL = '''

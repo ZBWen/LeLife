@@ -19,7 +19,7 @@ class NewPrevkeno(task_msg.Task):
             count = 0
             while True:
                 count += 1
-                if count > 20:
+                if count > 50:
                     break
                 try:
                     URL = 'http://www.bwlc.net/bulletin/keno.html?num={}'.format(NUM)
