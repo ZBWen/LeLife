@@ -13,6 +13,7 @@ class NewPrevkeno(task_msg.Task):
     default_retry_delay = 0
 
     def run(self, *args, **kwargs):
+        print ('NewPrevkeno')
         issue = None
         NUM = redis_connt.get('NEW_PREVKENO',default=850555)
         print (NUM)
