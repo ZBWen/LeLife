@@ -64,8 +64,10 @@ class PrevkenoMiss(task_msg.Task):
 
     def run(self, *args, **kwargs):
         try:
+            print ('start prevkeno miss')
             prevkeno = Prevkeno()
             prevkeno.select_miss()
+            print ('prevkeno miss end')
         except Exception as e:
             print (u'%s' % e)
 
