@@ -79,8 +79,8 @@ def set_keno(**kwargs):
     redis_connt.expire(KENO_KEY, 3600*24*360)
 
     mysql = Mysql()
-    SQL = "INSERT INTO lottery_bjkeno (issue,nums,frisbee,pc_nums,pc_sum,date,create_date) VALUES ('{}','{}','{}','{}','{}','{}','{}');" \
-        .format(issue,lottery,frisbee,pc_nums,pc_sum,date,datetime.datetime.now())
+    SQL = "INSERT INTO lottery_bjkeno (issue,nums,frisbee,pc_nums,pc_sum,date,create_date,update_date) VALUES ('{}','{}','{}','{}','{}','{}','{}');" \
+        .format(issue,lottery,frisbee,pc_nums,pc_sum,date,datetime.datetime.now(),datetime.datetime.now())
     try:
         mysql.insertOne(SQL)
         mysql.dispose()

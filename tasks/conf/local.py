@@ -21,11 +21,19 @@ from datetime import timedelta
 from celery.schedules import crontab
 # 定期执行任务
 CELERYBEAT_SCHEDULE = {
-    # 刷新代理http
+    # # 刷新代理http
+    # 'ref_ip':{
+    #     'task': 'tasks.utils.proxies.RefreshProxies',
+    #     'schedule': crontab(
+    #         minute='0,5,10,15,20,25,30,35,40,45,50,55'),
+    #     "options":{},
+    #     'args': ()
+    # },
+
+    # 北京快乐8 遗漏
     'ref_ip':{
-        'task': 'tasks.utils.proxies.RefreshProxies',
-        'schedule': crontab(
-            minute='0,5,10,15,20,25,30,35,40,45,50,55'),
+        'task': 'tasks.service.lottery.PrevkenoMiss',
+        'schedule': crontab(minute='*/1'),
         "options":{},
         'args': ()
     },

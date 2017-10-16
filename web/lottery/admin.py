@@ -9,5 +9,12 @@ class BJkeNoAdmin(admin.ModelAdmin):
         'create_date'
     )
 
-
+class LotteryMissAdmin(admin.ModelAdmin):
+    search_fields = ('issue',)
+    list_display = (
+        'lottery_type', 'issue','update_date', 'create_date', 'is_insert'
+    )
+    list_filter = ('lottery_type',)
+  
 admin.site.register(BJkeNo, BJkeNoAdmin)
+admin.site.register(LotteryMiss, LotteryMissAdmin)
