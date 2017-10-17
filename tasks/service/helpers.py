@@ -8,7 +8,7 @@ class IsRunTime(object):
 		self._str = _str
 		self.now = datetime.datetime.now()
 
-	def verify(cls):
+	def verify(self):
 		if self._str == 'NewPrevkeno':
 			self.prevkeno()
 
