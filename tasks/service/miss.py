@@ -11,21 +11,23 @@ KBKE = 8601001
 class Prevkeno(object):
 
     def select_miss(self):
-        issue = 0
-        res_issue = 0
-        last_issue = int(redis_connt.get('NEW_PREVKENO',default=0))
+        issue = 0  # 还是期号，期号计数
+        res_issue = 0 # 循环到期号， 已存在的期号
+
+        first_issue = int(redis_connt.get('MISS_PREVKENO_FIRST',default=0))
         mysql = Mysql()
-        MISS_SQL = '''
-                SELECT 
-                    issue 
-                FROM 
-                    lottery_lotterymiss 
-                WHERE lottery_type={} 
-                ORDER BY -issue;
-            '''.format(KBKE)
-        result = mysql.getOne(MISS_SQL)
-        if result:
-           issue = int(result['issue'])
+        if not first_issue:
+            MISS_SQL = '''
+                    SELECT 
+                        issue 
+                    FROM 
+                        lottery_lotterymiss 
+                    WHERE lottery_type={} 
+                    ORDER BY -issue;
+                '''.format(KBKE)
+            result = mysql.getOne(MISS_SQL)
+            if result:
+               first_issue = int(result['issue'])
 
         SELECT_SQL = '''
                 SELECT 
@@ -34,12 +36,10 @@ class Prevkeno(object):
                     lottery_bjkeno 
                 WHERE issue>{}
                 ORDER BY issue;
-            '''.format(issue)
-        print (SELECT_SQL)
+            '''.format(first_issue)
         result = mysql.getAll(SELECT_SQL)
-        print (len(result))
         try:
-            for info in result[:1000]:
+            for info in result[:10000]:
                 if not issue:
                     issue = int(info['issue'])
                 if res_issue == int(info['issue']):
@@ -77,6 +77,7 @@ class Prevkeno(object):
                         mysql.insertOne(SQL)
                     issue = res_issue
             mysql.dispose()
+            redis_connt.set('MISS_PREVKENO_FIRST',issue)
         except Exception as e:
             print ('e %s' % e)
             mysql.dispose(isEnd=0)

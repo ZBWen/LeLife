@@ -6,6 +6,7 @@ from tasks import config
 from tasks import task_msg
 from tasks.service.keno import *
 from tasks.service.miss import *
+from tasks.service.helpers import IsRunTime
 from tasks.utils.redis import redis_connt
 
 class NewPrevkeno(task_msg.Task):
@@ -13,6 +14,10 @@ class NewPrevkeno(task_msg.Task):
     default_retry_delay = 0
 
     def run(self, *args, **kwargs):
+        # 执行时间逻辑
+        if not IsRunTime('NewPrevkeno').verify():
+            return
+
         issue = None
         NUM = redis_connt.get('NEW_PREVKENO',default=850555)
         if NUM:
