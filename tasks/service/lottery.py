@@ -16,6 +16,7 @@ class NewPrevkeno(task_msg.Task):
     def run(self, *args, **kwargs):
         # 执行时间逻辑
         if not IsRunTime('NewPrevkeno').verify():
+            print 'NO Runing'
             return
 
         issue = None
