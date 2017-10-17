@@ -10,7 +10,7 @@ class IsRunTime(object):
 
     def verify(self):
         if self._str == 'NewPrevkeno':
-            self.prevkeno()
+            return self.prevkeno()
 
     def prevkeno(self):
         if self.now.hour < 9:
