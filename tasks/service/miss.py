@@ -39,7 +39,7 @@ class Prevkeno(object):
             '''.format(first_issue)
         result = mysql.getAll(SELECT_SQL)
         try:
-            for info in result[:10000]:
+            for info in result[:50000]:
                 if not issue:
                     issue = int(info['issue'])
                 if res_issue == int(info['issue']):
@@ -77,7 +77,7 @@ class Prevkeno(object):
                         mysql.insertOne(SQL)
                     issue = res_issue
             mysql.dispose()
-            redis_connt.set('MISS_PREVKENO_FIRST',issue)
+            redis_connt.set('MISS_PREVKENO_FIRST',res_issue)
         except Exception as e:
             print ('e %s' % e)
             mysql.dispose(isEnd=0)
