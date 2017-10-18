@@ -62,7 +62,7 @@ class NewPrevkeno(task_msg.Task):
                 print (int(issue)+1)
 
             last_prevkeno = redis_connt.get('NEW_PREVKENO',default=0)
-            if (int(NUM)+1) > last_prevkeno:
+            if (int(NUM)+1) > int(last_prevkeno):
                 # 更新 新的待获取期号
                 redis_connt.set('NEW_PREVKENO',int(NUM)+1)
                 redis_connt.expire('NEW_PREVKENO', 3600*24*7)
