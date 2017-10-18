@@ -60,9 +60,12 @@ class NewPrevkeno(task_msg.Task):
                     pc_nums=nums,
                     pc_sum=sum(nums))
                 print (int(issue)+1)
-            # 更新 新的待获取期号
-            redis_connt.set('NEW_PREVKENO',int(NUM)+1)
-            redis_connt.expire('NEW_PREVKENO', 3600*24*7)
+
+            last_prevkeno = redis_connt.get('NEW_PREVKENO',default=0)
+            if (int(NUM)+1) > last_prevkeno:
+                # 更新 新的待获取期号
+                redis_connt.set('NEW_PREVKENO',int(NUM)+1)
+                redis_connt.expire('NEW_PREVKENO', 3600*24*7)
 
 class PrevkenoMiss(task_msg.Task):
     max_retries = 0
