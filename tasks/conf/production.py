@@ -36,7 +36,7 @@ CELERYBEAT_SCHEDULE = {
         'task': 'tasks.service.lottery.PrevkenoMiss',
         'schedule': crontab(
             hour='1,10,11,12,13,14,15,16,17,18,19,20,21,22,23',
-            minute='16'),
+            minute='3,8,13,18,23,28,33,38,43,48,53,58'),
         "options":{},
         'args': ()
     },
