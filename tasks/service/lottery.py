@@ -25,31 +25,27 @@ class NewPrevkeno(task_msg.Task):
             count = 0
             while True:
                 count += 1
-                if count > 40:
+                if count > 60:
                     break
                 try:
                     URL = 'http://www.bwlc.net/bulletin/keno.html?num={}'.format(NUM)
                     issue, lottery, frisbee, date = get_prevkeno(URL)
                     if issue:
                         break
-                    time.sleep(1)
                     URL = 'http://www.bwlc.net/bulletin/prevkeno.html?num={}'.format(NUM)
                     issue, lottery, frisbee, date = get_prevkeno(URL)
                     if issue:
                         break
-                    time.sleep(1)
                     URL = 'http://www.bwlc.net/bulletin/keno.html'
                     issue, lottery, frisbee, date = get_prevkeno(URL)
                     if issue and str(NUM) == str(issue):
                         break
-                    time.sleep(1)
                     URL = 'http://www.bwlc.net/bulletin/prevkeno.html'
                     issue, lottery, frisbee, date = get_prevkeno(URL)
                     if issue and str(NUM) == str(issue):
                         break
                 except Exception as e:
                     print (u'%s' % e)
-            print (issue, lottery, frisbee, date)
             nums = pc28_num(lottery.split(','))
             if str(NUM) == str(issue):
                 set_keno(
@@ -60,6 +56,8 @@ class NewPrevkeno(task_msg.Task):
                     pc_nums=nums,
                     pc_sum=sum(nums))
                 print (int(issue)+1)
+            else:
+                print (issue, lottery, frisbee, date)
 
             last_prevkeno = redis_connt.get('NEW_PREVKENO',default=0)
             if (int(NUM)+1) > int(last_prevkeno):
