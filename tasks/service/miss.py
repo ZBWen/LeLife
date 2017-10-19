@@ -39,7 +39,7 @@ class Prevkeno(object):
             '''.format(first_issue)
         result = mysql.getAll(SELECT_SQL)
         try:
-            for info in result[:50000]:
+            for info in result[:10000]:
                 if not issue:
                     issue = int(info['issue'])
                 if res_issue == int(info['issue']):
