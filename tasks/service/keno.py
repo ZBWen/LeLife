@@ -36,17 +36,21 @@ def get_prevkeno(url):
     lottery = None
     frisbee = None
     date = None
-    html = Request().open_url(url,timeout=15)
-    py = PyQuery(html)
-    table = py('.lott_cont')('table')
-    trs = table('tr')
-    trs.pop(0)
-    for tr in trs.items():
-        tds = tr('td')
-        issue = tds[0].text
-        lottery = tds[1].text
-        frisbee = tds[2].text
-        date = tds[3].text
+
+    try:
+        html = Request().open_url(url,timeout=15)
+        py = PyQuery(html)
+        table = py('.lott_cont')('table')
+        trs = table('tr')
+        trs.pop(0)
+        for tr in trs.items():
+            tds = tr('td')
+            issue = tds[0].text
+            lottery = tds[1].text
+            frisbee = tds[2].text
+            date = tds[3].text
+    except Exception as e:
+        print (u'%s' % e)
     return issue, lottery, frisbee, date
 
 # pc28 num
@@ -79,16 +83,27 @@ def set_keno(**kwargs):
 
     mysql = Mysql()
     now_date = datetime.datetime.now()
-    SQL = '''
-        INSERT INTO 
-            lottery_bjkeno (issue,nums,frisbee,pc_nums,pc_sum,date,create_date,update_date) 
-        VALUES 
-            ('{}','{}','{}','{}','{}','{}','{}','{}');
-        '''.format(issue,lottery,frisbee,pc_nums,pc_sum,date,now_date,now_date)
-    try:
-        mysql.insertOne(SQL)
-        mysql.dispose()
-    except Exception as e:
-        print (SQL)
-        print (' %s' % e)
-        mysql.dispose(isEnd=0)
+
+    SELECT_SQL = '''
+            SELECT 
+                issue 
+            FROM 
+                lottery_bjkeno 
+            WHERE issue={};
+        '''.format(issue)
+
+    result = mysql.getOne(SELECT_SQL)
+    if not result:
+        SQL = '''
+            INSERT INTO 
+                lottery_bjkeno (issue,nums,frisbee,pc_nums,pc_sum,date,create_date,update_date) 
+            VALUES 
+                ('{}','{}','{}','{}','{}','{}','{}','{}');
+            '''.format(issue,lottery,frisbee,pc_nums,pc_sum,date,now_date,now_date)
+        try:
+            mysql.insertOne(SQL)
+            mysql.dispose()
+        except Exception as e:
+            print (SQL)
+            print (' %s' % e)
+            mysql.dispose(isEnd=0)

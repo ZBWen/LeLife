@@ -11,7 +11,8 @@ KBKE = 8601001
 class Prevkeno(object):
 
     def select_miss(self):
-        issue = 0  # 还是期号，期号计数
+        issue_len = 300 # 查询期号最大区间
+        issue = 0  # 期号，期号计数
         res_issue = 0 # 循环到期号， 已存在的期号
 
         first_issue = int(redis_connt.get('MISS_PREVKENO_FIRST',default=0))
@@ -39,7 +40,7 @@ class Prevkeno(object):
             '''.format(first_issue)
         result = mysql.getAll(SELECT_SQL)
         try:
-            for info in result[:300]:
+            for info in result[:issue_len]:
                 if not issue:
                     issue = int(info['issue'])
                 if res_issue == int(info['issue']):
@@ -69,13 +70,19 @@ class Prevkeno(object):
                 else:
                     print ('{}-{}'.format(res_issue,issue))
                     for i in range(res_issue-issue):
-                        SQL = '''
-                            INSERT INTO 
-                                lottery_lotterymiss (lottery_type,issue,is_insert,create_date,update_date) 
-                            VALUES ('{}','{}','{}','{}','{}');
-                            '''.format(KBKE,issue+i,0,datetime.datetime.now(),datetime.datetime.now())
-                        mysql.insertOne(SQL)
-                    issue = res_issue
+                        if i < issue_len:
+                            SQL = '''
+                                INSERT INTO 
+                                    lottery_lotterymiss (lottery_type,issue,is_insert,create_date,update_date) 
+                                VALUES ('{}','{}','{}','{}','{}');
+                                '''.format(KBKE,issue+i,0,datetime.datetime.now(),datetime.datetime.now())
+                            mysql.insertOne(SQL)
+                        else:
+                            issue = issue+i-1
+                            break
+                    
+                if first_issue+issue_len <= issue:
+                    break
             mysql.dispose()
             redis_connt.set('MISS_PREVKENO_FIRST',res_issue)
         except Exception as e:

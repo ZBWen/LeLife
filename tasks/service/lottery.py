@@ -6,46 +6,23 @@ from tasks import config
 from tasks import task_msg
 from tasks.service.keno import *
 from tasks.service.miss import *
-from tasks.service.helpers import IsRunTime
+from tasks.service.helpers import *
 from tasks.utils.redis import redis_connt
 
-class NewPrevkeno(task_msg.Task):
+
+class SelectPrevkeno(task_msg.Task):
     max_retries = 0
     default_retry_delay = 0
 
     def run(self, *args, **kwargs):
-        # 执行时间逻辑
-        if not IsRunTime('NewPrevkeno').verify():
-            print ('NO Runing')
-            return
-
         issue = None
-        NUM = redis_connt.get('NEW_PREVKENO',default=850555)
-        if NUM:
-            count = 0
-            while True:
-                count += 1
-                if count > 60:
-                    break
-                try:
-                    URL = 'http://www.bwlc.net/bulletin/keno.html?num={}'.format(NUM)
-                    issue, lottery, frisbee, date = get_prevkeno(URL)
-                    if issue:
-                        break
-                    URL = 'http://www.bwlc.net/bulletin/prevkeno.html?num={}'.format(NUM)
-                    issue, lottery, frisbee, date = get_prevkeno(URL)
-                    if issue:
-                        break
-                    URL = 'http://www.bwlc.net/bulletin/keno.html'
-                    issue, lottery, frisbee, date = get_prevkeno(URL)
-                    if issue and str(NUM) == str(issue):
-                        break
-                    URL = 'http://www.bwlc.net/bulletin/prevkeno.html'
-                    issue, lottery, frisbee, date = get_prevkeno(URL)
-                    if issue and str(NUM) == str(issue):
-                        break
-                except Exception as e:
-                    print (u'%s' % e)
+        NUM = kwargs['issue']
+
+        print ('select {}'.format(NUM))
+        while not issue:
+            issue, lottery, frisbee, date = select_prevkeno(NUM)
+        if lottery:
+            print ('set {}-{}'.format(lottery,date))
             nums = pc28_num(lottery.split(','))
             if str(NUM) == str(issue):
                 set_keno(
@@ -55,15 +32,49 @@ class NewPrevkeno(task_msg.Task):
                     date=date,
                     pc_nums=nums,
                     pc_sum=sum(nums))
-                print (int(issue)+1)
+            
+
+class NewPrevkeno(task_msg.Task):
+    max_retries = 0
+    default_retry_delay = 0
+
+    def run(self, *args, **kwargs):
+
+        
+        # 执行时间逻辑
+        if not IsRunTime('NewPrevkeno').verify():
+            print ('NO Runing')
+            return
+
+        issue = None
+        NUM = redis_connt.get('NEW_PREVKENO',default=0)
+        if NUM:
+            count = 0
+            while True:
+                count += 1
+                issue, lottery, frisbee, date = select_prevkeno(NUM)
+                if issue or count > 50:
+                    break
+            if lottery:
+                nums = pc28_num(lottery.split(','))
+                if str(NUM) == str(issue):
+                    set_keno(
+                        issue=issue,
+                        lottery=lottery,
+                        frisbee=frisbee,
+                        date=date,
+                        pc_nums=nums,
+                        pc_sum=sum(nums))
             else:
-                print (issue, lottery, frisbee, date)
+                task_msg.send_task('tasks.service.lottery.SelectPrevkeno',kwargs={"issue":NUM})
 
             last_prevkeno = redis_connt.get('NEW_PREVKENO',default=0)
             if (int(NUM)+1) > int(last_prevkeno):
                 # 更新 新的待获取期号
                 redis_connt.set('NEW_PREVKENO',int(NUM)+1)
                 redis_connt.expire('NEW_PREVKENO', 3600*24*7)
+            else:
+                print ('{}-{}'.format((int(NUM)+1),last_prevkeno))
 
 class PrevkenoMiss(task_msg.Task):
     max_retries = 0

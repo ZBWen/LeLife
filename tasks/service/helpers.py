@@ -2,6 +2,8 @@
 import time
 import datetime
 
+from tasks.service.keno import *
+
 class IsRunTime(object):
 
     def __init__(self, _str):
@@ -18,3 +20,22 @@ class IsRunTime(object):
         if self.now.hour == 9 and self.now.minute < 5:
             return False
         return True
+
+
+def select_prevkeno(NUM):
+    URL = 'http://www.bwlc.net/bulletin/keno.html?num={}'.format(NUM)
+    issue, lottery, frisbee, date = get_prevkeno(URL)
+    if issue:
+        return issue, lottery, frisbee, date
+    URL = 'http://www.bwlc.net/bulletin/prevkeno.html?num={}'.format(NUM)
+    issue, lottery, frisbee, date = get_prevkeno(URL)
+    if issue:
+        return issue, lottery, frisbee, date
+    URL = 'http://www.bwlc.net/bulletin/keno.html'
+    issue, lottery, frisbee, date = get_prevkeno(URL)
+    if issue and str(NUM) == str(issue):
+        return issue, lottery, frisbee, date
+    URL = 'http://www.bwlc.net/bulletin/prevkeno.html'
+    issue, lottery, frisbee, date = get_prevkeno(URL)
+    if issue and str(NUM) == str(issue):
+        return issue, lottery, frisbee, date
