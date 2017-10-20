@@ -18,11 +18,11 @@ class SelectPrevkeno(task_msg.Task):
         issue = None
         NUM = kwargs['issue']
 
-        print ('select {}'.format(NUM))
+        print ('Select {}'.format(NUM))
         while not issue:
             issue, lottery, frisbee, date = select_prevkeno(NUM)
         if lottery:
-            print ('set {}-{}'.format(lottery,date))
+            print ('Set {}-{}'.format(lottery,date))
             nums = pc28_num(lottery.split(','))
             if str(NUM) == str(issue):
                 set_keno(
@@ -39,7 +39,6 @@ class NewPrevkeno(task_msg.Task):
     default_retry_delay = 0
 
     def run(self, *args, **kwargs):
-
         
         # 执行时间逻辑
         if not IsRunTime('NewPrevkeno').verify():
@@ -65,11 +64,13 @@ class NewPrevkeno(task_msg.Task):
                         date=date,
                         pc_nums=nums,
                         pc_sum=sum(nums))
+                    print ('Set NewPrevkeno {}'.format(issue)
             else:
                 task_msg.send_task('tasks.service.lottery.SelectPrevkeno',kwargs={"issue":NUM})
 
             last_prevkeno = redis_connt.get('NEW_PREVKENO',default=0)
             if (int(NUM)+1) > int(last_prevkeno):
+                print ('Set NewPrevkeno Redis {}'.format(int(NUM)+1))
                 # 更新 新的待获取期号
                 redis_connt.set('NEW_PREVKENO',int(NUM)+1)
                 redis_connt.expire('NEW_PREVKENO', 3600*24*7)
