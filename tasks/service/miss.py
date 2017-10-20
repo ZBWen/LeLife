@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import time
 import datetime
+import traceback
 
 from tasks.utils.redis import redis_connt
 from tasks.utils.mysql import Mysql
@@ -86,5 +87,5 @@ class Prevkeno(object):
             mysql.dispose()
             redis_connt.set('MISS_PREVKENO_FIRST',res_issue)
         except Exception as e:
-            print ('e %s' % e)
+            print ('e %s' % traceback.format_exc())
             mysql.dispose(isEnd=0)
