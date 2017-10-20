@@ -39,3 +39,5 @@ def select_prevkeno(NUM):
     issue, lottery, frisbee, date = get_prevkeno(URL)
     if issue and str(NUM) == str(issue):
         return issue, lottery, frisbee, date
+
+    return None, None, None, None
