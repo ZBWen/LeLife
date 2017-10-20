@@ -25,10 +25,16 @@ CELERY_QUEUES = {
         'exchange':'tasks',
         'routing_key':'tasks',
     },
+    'celery':{   # 普通非即时任务
+        'exchange':'celery',
+        'routing_key':'celery',
+    },
 }
 
 CELERY_ROUTES = {
     'tasks.service.lottery.NewPrevkeno': {'queue': 'tasks', 'routing_key': 'tasks'},
+    'tasks.service.lottery.PrevkenoMiss': {'queue': 'tasks', 'routing_key': 'tasks'},
+    'tasks.service.lottery.SelectPrevkeno': {'queue': 'celery', 'routing_key': 'celery'},
 }
 
 from datetime import timedelta
@@ -51,7 +57,7 @@ CELERYBEAT_SCHEDULE = {
         'schedule': crontab(
             hour='1,10,11,12,13,14,15,16,17,18,19,20,21,22,23',
             minute='3,8,13,18,23,28,33,38,43,48,53,58'),
-        "options":{},
+        "options":{'queue':'celery'},
         'args': ()
     },
 
