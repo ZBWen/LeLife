@@ -64,7 +64,7 @@ class NewPrevkeno(task_msg.Task):
                         date=date,
                         pc_nums=nums,
                         pc_sum=sum(nums))
-                    print ('Set NewPrevkeno {}'.format(issue)
+                    print ('Set NewPrevkeno {}'.format(issue))
             else:
                 task_msg.send_task('tasks.service.lottery.SelectPrevkeno',kwargs={"issue":NUM})
 
