@@ -27,14 +27,17 @@ def select_prevkeno(NUM):
     issue, lottery, frisbee, date = get_prevkeno(URL)
     if issue:
         return issue, lottery, frisbee, date
+    time.sleep(1)
     URL = 'http://www.bwlc.net/bulletin/prevkeno.html?num={}'.format(NUM)
     issue, lottery, frisbee, date = get_prevkeno(URL)
     if issue:
         return issue, lottery, frisbee, date
+    time.sleep(1)
     URL = 'http://www.bwlc.net/bulletin/keno.html'
     issue, lottery, frisbee, date = get_prevkeno(URL)
     if issue and str(NUM) == str(issue):
         return issue, lottery, frisbee, date
+    time.sleep(1)
     URL = 'http://www.bwlc.net/bulletin/prevkeno.html'
     issue, lottery, frisbee, date = get_prevkeno(URL)
     if issue and str(NUM) == str(issue):

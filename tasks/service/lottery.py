@@ -15,11 +15,13 @@ class SelectPrevkeno(task_msg.Task):
     default_retry_delay = 0
 
     def run(self, *args, **kwargs):
+        count = 0
         issue = None
         NUM = kwargs['issue']
-
         print ('Select {}'.format(NUM))
         while not issue:
+            count += 1
+            return if count > 60 else pass
             issue, lottery, frisbee, date = select_prevkeno(NUM)
         if lottery:
             print ('Set {}-{}'.format(lottery,date))
