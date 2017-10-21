@@ -86,6 +86,7 @@ class PrevkenoMiss(task_msg.Task):
     default_retry_delay = 0
 
     def run(self, *args, **kwargs):
+        deep = kwargs.get('deep',True)
         try:
             print ('Start prevkeno miss')
             prevkeno = Prevkeno()
@@ -93,7 +94,11 @@ class PrevkenoMiss(task_msg.Task):
             print ('Prevkeno miss end')
         except Exception as e:
             print (u'%s' % e)
-        task_msg.send_task('tasks.service.lottery.PrevkenoMiss')
+        if deep:
+            now_pre = redis_connt.get('NEW_PREVKENO')
+            first_issue = redis_connt.get('MISS_PREVKENO_FIRST')
+            if first_issue < now_pre:
+                task_msg.send_task('tasks.service.lottery.PrevkenoMiss')
 
 class Test(task_msg.Task):
     max_retries = 0
