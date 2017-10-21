@@ -98,6 +98,7 @@ class PrevkenoMiss(task_msg.Task):
             now_pre = redis_connt.get('NEW_PREVKENO')
             first_issue = redis_connt.get('MISS_PREVKENO_FIRST')
             if first_issue < now_pre:
+                time.sleep(30)
                 task_msg.send_task('tasks.service.lottery.PrevkenoMiss')
 
 class Test(task_msg.Task):

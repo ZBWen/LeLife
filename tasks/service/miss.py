@@ -13,9 +13,9 @@ class Prevkeno(object):
 
     def select_miss(self,issue_len=1000):
         issue = 0  # 期号，期号计数
-        res_issue = 0 # 循环到期号， 已存在的期号
-
         first_issue = int(redis_connt.get('MISS_PREVKENO_FIRST',default=0))
+        res_issue = first_issue # 循环到期号， 已存在的期号
+
         mysql = Mysql()
         if not first_issue:
             MISS_SQL = '''
