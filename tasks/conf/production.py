@@ -18,25 +18,6 @@ REDIS_URL = 'redis://:5cf4940E368b@47.52.91.196:6379/0'
 CELERY_IMPORTS=('tasks.service.lottery')
 
 
-
-# queue
-CELERY_QUEUES = {
-    'tasks':{
-        'exchange':'tasks',
-        'routing_key':'tasks',
-    },
-    'base':{
-        'exchange':'base',
-        'routing_key':'base',
-    },
-}
-
-CELERY_ROUTES = {
-    'tasks.service.lottery.NewPrevkeno': {'queue': 'tasks', 'routing_key': 'tasks'},
-    'tasks.service.lottery.PrevkenoMiss': {'queue': 'tasks', 'routing_key': 'tasks'},
-    'tasks.service.lottery.SelectPrevkeno': {'queue': 'base', 'routing_key': 'base'},
-}
-
 from datetime import timedelta
 from celery.schedules import crontab
 # 定期执行任务
@@ -51,23 +32,23 @@ CELERYBEAT_SCHEDULE = {
     #     'args': ()
     # },
 
-    # 北京快乐8 遗漏
-    'prevkeno_miss':{
-        'task': 'tasks.service.lottery.PrevkenoMiss',
-        'schedule': crontab(
-            hour='1,10,11,12,13,14,15,16,17,18,19,20,21,22,23',
-            minute='3,8,13,18,23,28,33,38,43,48,53,58'),
-        "options":{'queue':'base'},
-        'args': ()
-    },
+    # # 北京快乐8 遗漏
+    # 'prevkeno_miss':{
+    #     'task': 'tasks.service.lottery.PrevkenoMiss',
+    #     'schedule': crontab(
+    #         hour='1,10,11,12,13,14,15,16,17,18,19,20,21,22,23',
+    #         minute='3,8,13,18,23,28,33,38,43,48,53,58'),
+    #     "options":{},
+    #     'args': ()
+    # },
 
-	# 获得指定期号开奖号码
+    # 获得指定期号开奖号码
     'select-new-jbK8':{
         'task': 'tasks.service.lottery.NewPrevkeno',
         'schedule': crontab(
             hour='9,10,11,12,13,14,15,16,17,18,19,20,21,22,23',
             minute='0,5,10,15,20,25,30,35,40,45,50,55'),
-        "options":{'queue':'tasks'},
+        "options":{},
         'args': ()
     },
     # # 获得所有历史记录
