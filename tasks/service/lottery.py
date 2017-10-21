@@ -87,12 +87,13 @@ class PrevkenoMiss(task_msg.Task):
 
     def run(self, *args, **kwargs):
         try:
-            print ('start prevkeno miss')
+            print ('Start prevkeno miss')
             prevkeno = Prevkeno()
             prevkeno.select_miss()
-            print ('prevkeno miss end')
+            print ('Prevkeno miss end')
         except Exception as e:
             print (u'%s' % e)
+        task_msg.send_task('tasks.service.lottery.PrevkenoMiss')
 
 class Test(task_msg.Task):
     max_retries = 0

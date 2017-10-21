@@ -11,8 +11,7 @@ KBKE = 8601001
 
 class Prevkeno(object):
 
-    def select_miss(self):
-        issue_len = 300 # 查询期号最大区间
+    def select_miss(self,issue_len=1000):
         issue = 0  # 期号，期号计数
         res_issue = 0 # 循环到期号， 已存在的期号
 
