@@ -76,6 +76,7 @@ class Prevkeno(object):
                         #     VALUES ('{}','{}','{}','{}','{}');
                         #     '''.format(KBKE,issue+i,0,datetime.datetime.now(),datetime.datetime.now())
                         # mysql.insertOne(SQL)
+                    issue = res_issue
             mysql.dispose()
             redis_connt.set('MISS_PREVKENO_FIRST',res_issue)
         except Exception as e:
