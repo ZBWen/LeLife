@@ -11,7 +11,7 @@ from tasks.utils.redis import redis_connt
 
 
 class SetMissPrevkeno(task_msg.Task):
-     max_retries = 0
+    max_retries = 0
     default_retry_delay = 0
 
     def run(self, *args, **kwargs):
