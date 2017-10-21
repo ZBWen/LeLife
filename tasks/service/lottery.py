@@ -21,7 +21,8 @@ class SelectPrevkeno(task_msg.Task):
         print ('Select {}'.format(NUM))
         while not issue:
             count += 1
-            return '' if count > 60 else pass
+            if count > 60:
+                return
             issue, lottery, frisbee, date = select_prevkeno(NUM)
         if lottery:
             print ('Set {}-{}'.format(lottery,date))
