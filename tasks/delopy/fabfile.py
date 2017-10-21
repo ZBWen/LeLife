@@ -19,4 +19,4 @@ def deploy():
         run("rm -rf tasks")
         run("cp -r /mnt/github/leLife/tasks tasks")
         # run("chmod 777 celerybeat-schedule")
-        run("sudo supervisorctl restart celery tasks")
+        run("sudo supervisorctl restart tasks")
