@@ -10,6 +10,21 @@ from tasks.service.helpers import *
 from tasks.utils.redis import redis_connt
 
 
+class SetMissPrevkeno(task_msg.Task):
+     max_retries = 0
+    default_retry_delay = 0
+
+    def run(self, *args, **kwargs):
+        count = 0
+        issue = None
+        try:
+            issues = get_miss_prevkeno()
+            for issue in issues:
+                task_msg.send_task('tasks.service.lottery.SelectPrevkeno',kwargs={"issue":NUM})
+        except Exception as e:
+            print ('SetMissPrevkeno:{}'.format(e))
+
+
 class SelectPrevkeno(task_msg.Task):
     max_retries = 0
     default_retry_delay = 0
@@ -34,8 +49,7 @@ class SelectPrevkeno(task_msg.Task):
                     frisbee=frisbee,
                     date=date,
                     pc_nums=nums,
-                    pc_sum=sum(nums))
-            
+                    pc_sum=sum(nums))   
 
 class NewPrevkeno(task_msg.Task):
     max_retries = 0

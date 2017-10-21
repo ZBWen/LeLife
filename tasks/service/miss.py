@@ -11,6 +11,19 @@ KBKE = 8601001
 
 class Prevkeno(object):
 
+    def get_miss_prevkeno():
+        SELECT_SQL = '''
+                SELECT 
+                    issue 
+                FROM 
+                    lottery_lotterymiss 
+                WHERE is_insert=0;
+            '''
+        mysql = Mysql()
+        result = mysql.getMany(SELECT_SQL,300)
+        print (result)
+        return result
+
     def select_miss(self,issue_len=1000):
         issue = 0  # 期号，期号计数
         first_issue = int(redis_connt.get('MISS_PREVKENO_FIRST',default=0))
