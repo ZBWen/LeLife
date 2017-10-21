@@ -38,11 +38,9 @@ class Prevkeno(object):
                 WHERE issue>{}
                 ORDER BY issue;
             '''.format(first_issue)
-        result = mysql.getAll(SELECT_SQL)
+        result = mysql.getMany(SELECT_SQL,issue_len)
         try:
-            for info in result[:issue_len]:
-                if not issue:
-                    issue = int(info['issue'])
+            for info in result:
                 if res_issue == int(info['issue']):
                     print ('delete:{}'.format(res_issue))
                     # 删除重复的数据
@@ -63,27 +61,21 @@ class Prevkeno(object):
                         '''.format(res_issue,res_issue)
                     mysql.delete(DELETE_SQL)
                     continue
-                issue += 1
+
                 res_issue = int(info['issue'])
+                issue = int(info['issue']) if not issue else issue+1
                 if issue == res_issue:
                     continue
                 else:
-                    print ('{}-{}'.format(res_issue,issue))
+                    print ('{}-{}'.format(issue,res_issue))
                     for i in range(res_issue-issue):
-                        if i < issue_len:
-                            print (issue+i)
-                            # SQL = '''
-                            #     INSERT INTO 
-                            #         lottery_lotterymiss (lottery_type,issue,is_insert,create_date,update_date) 
-                            #     VALUES ('{}','{}','{}','{}','{}');
-                            #     '''.format(KBKE,issue+i,0,datetime.datetime.now(),datetime.datetime.now())
-                            # mysql.insertOne(SQL)
-                        else:
-                            issue = issue+i-1
-                            break
-                    
-                if first_issue+issue_len <= issue:
-                    break
+                        print (issue+i)
+                        # SQL = '''
+                        #     INSERT INTO 
+                        #         lottery_lotterymiss (lottery_type,issue,is_insert,create_date,update_date) 
+                        #     VALUES ('{}','{}','{}','{}','{}');
+                        #     '''.format(KBKE,issue+i,0,datetime.datetime.now(),datetime.datetime.now())
+                        # mysql.insertOne(SQL)
             mysql.dispose()
             redis_connt.set('MISS_PREVKENO_FIRST',res_issue)
         except Exception as e:
