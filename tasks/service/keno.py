@@ -59,8 +59,11 @@ def get_prevkeno(url):
             frisbee = tds[2].text
             date = tds[3].text
     except Exception as e:
-        print (html)
         print (u'%s' % e)
+        try:
+            print (html)
+        except Exception as e:
+            pass  
     return issue, lottery, frisbee, date
 
 # pc28 num
