@@ -37,8 +37,17 @@ def get_prevkeno(url):
     frisbee = None
     date = None
 
+    headers = {
+        'Cache-Control':'no-cache',
+        'Host':'www.bwlc.net',
+        'Pragma':'no-cache',
+        'Referer':'http://www.bwlc.net/bulletin/prevkeno.html',
+        'Upgrade-Insecure-Requests':'1',
+        'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
+    }
+
     try:
-        html = Request().open_url(url,timeout=15)
+        html = Request().open_url(url,headers=headers,timeout=15)
         py = PyQuery(html)
         table = py('.lott_cont')('table')
         trs = table('tr')
