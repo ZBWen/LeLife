@@ -86,7 +86,7 @@ class PrevkenoMiss(task_msg.Task):
     default_retry_delay = 0
 
     def run(self, *args, **kwargs):
-        deep = kwargs.get('deep',True)
+        deep = kwargs.get('deep',False)
         try:
             print ('Start prevkeno miss')
             prevkeno = Prevkeno()

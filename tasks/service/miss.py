@@ -69,13 +69,12 @@ class Prevkeno(object):
                 else:
                     print ('{}-{}'.format(issue,res_issue))
                     for i in range(res_issue-issue):
-                        print (issue+i)
-                        # SQL = '''
-                        #     INSERT INTO 
-                        #         lottery_lotterymiss (lottery_type,issue,is_insert,create_date,update_date) 
-                        #     VALUES ('{}','{}','{}','{}','{}');
-                        #     '''.format(KBKE,issue+i,0,datetime.datetime.now(),datetime.datetime.now())
-                        # mysql.insertOne(SQL)
+                        SQL = '''
+                            INSERT INTO 
+                                lottery_lotterymiss (lottery_type,issue,is_insert,create_date,update_date) 
+                            VALUES ('{}','{}','{}','{}','{}');
+                            '''.format(KBKE,issue+i,0,datetime.datetime.now(),datetime.datetime.now())
+                        mysql.insertOne(SQL)
                     issue = res_issue
             mysql.dispose()
             redis_connt.set('MISS_PREVKENO_FIRST',res_issue)
