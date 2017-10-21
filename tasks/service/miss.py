@@ -72,12 +72,13 @@ class Prevkeno(object):
                     print ('{}-{}'.format(res_issue,issue))
                     for i in range(res_issue-issue):
                         if i < issue_len:
-                            SQL = '''
-                                INSERT INTO 
-                                    lottery_lotterymiss (lottery_type,issue,is_insert,create_date,update_date) 
-                                VALUES ('{}','{}','{}','{}','{}');
-                                '''.format(KBKE,issue+i,0,datetime.datetime.now(),datetime.datetime.now())
-                            mysql.insertOne(SQL)
+                            print (issue+i)
+                            # SQL = '''
+                            #     INSERT INTO 
+                            #         lottery_lotterymiss (lottery_type,issue,is_insert,create_date,update_date) 
+                            #     VALUES ('{}','{}','{}','{}','{}');
+                            #     '''.format(KBKE,issue+i,0,datetime.datetime.now(),datetime.datetime.now())
+                            # mysql.insertOne(SQL)
                         else:
                             issue = issue+i-1
                             break
