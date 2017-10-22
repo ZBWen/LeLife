@@ -14,7 +14,7 @@ class LotteryMissAdmin(admin.ModelAdmin):
     list_display = (
         'lottery_type', 'issue','update_date', 'create_date', 'is_insert'
     )
-    list_filter = ('lottery_type',)
+    list_filter = ('lottery_type','is_insert')
   
 admin.site.register(BJkeNo, BJkeNoAdmin)
 admin.site.register(LotteryMiss, LotteryMissAdmin)

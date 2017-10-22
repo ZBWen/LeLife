@@ -21,6 +21,11 @@ class IsRunTime(object):
             return False
         return True
 
+def get_prevkeno_num(NUM):
+    time.sleep(3)
+    URL = 'http://www.bwlc.net/bulletin/prevkeno.html?num={}'.format(NUM)
+    issue, lottery, frisbee, date = get_prevkeno(URL)
+    return issue, lottery, frisbee, date
 
 def select_prevkeno(NUM):
     URL = 'http://www.bwlc.net/bulletin/keno.html?num={}'.format(NUM)

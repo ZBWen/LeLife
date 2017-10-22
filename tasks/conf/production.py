@@ -41,6 +41,14 @@ CELERYBEAT_SCHEDULE = {
         'kwargs':{}
     },
 
+    # 北京快乐8 遗漏 查询并添加
+    'set_miss_prevkeno':{
+        'task': 'tasks.service.lottery.SetMissPrevkeno',
+        'schedule': crontab(hour='22',minute='13'),
+        "options":{},
+        'args': ()
+    },
+
     # 获得指定期号开奖号码
     'select-new-jbK8':{
         'task': 'tasks.service.lottery.NewPrevkeno',

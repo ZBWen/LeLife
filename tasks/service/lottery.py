@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import time
 import datetime
+import traceback
 
 from tasks import config
 from tasks import task_msg
@@ -17,12 +18,25 @@ class SetMissPrevkeno(task_msg.Task):
     def run(self, *args, **kwargs):
         count = 0
         issue = None
-        try:
-            issues = get_miss_prevkeno()
-            for issue in issues:
-                task_msg.send_task('tasks.service.lottery.SelectPrevkeno',kwargs={"issue":NUM})
-        except Exception as e:
-            print ('SetMissPrevkeno:{}'.format(e))
+        prevkeno = Prevkeno()
+        issues = prevkeno.get_miss_prevkeno()
+        for info in issues:
+            try:
+                NUM = info['issue']
+                issue, lottery, frisbee, date = get_prevkeno_num(NUM)
+                if str(NUM) == str(issue):
+                    nums = pc28_num(lottery.split(','))
+                    set_keno(
+                        issue=issue,
+                        lottery=lottery,
+                        frisbee=frisbee,
+                        date=date,
+                        pc_nums=nums,
+                        pc_sum=sum(nums))
+                    prevkeno = Prevkeno()
+                    prevkeno.update_miss(issue=issue)
+            except Exception as e:
+                print ('SetMissPrevkeno:{}'.format(traceback.format_exc()))
 
 
 class SelectPrevkeno(task_msg.Task):
@@ -39,17 +53,17 @@ class SelectPrevkeno(task_msg.Task):
             if count > 60:
                 return
             issue, lottery, frisbee, date = select_prevkeno(NUM)
-        if lottery:
+
+        if str(NUM) == str(issue):
             print ('Set {}-{}'.format(lottery,date))
             nums = pc28_num(lottery.split(','))
-            if str(NUM) == str(issue):
-                set_keno(
-                    issue=issue,
-                    lottery=lottery,
-                    frisbee=frisbee,
-                    date=date,
-                    pc_nums=nums,
-                    pc_sum=sum(nums))   
+            set_keno(
+                issue=issue,
+                lottery=lottery,
+                frisbee=frisbee,
+                date=date,
+                pc_nums=nums,
+                pc_sum=sum(nums))
 
 class NewPrevkeno(task_msg.Task):
     max_retries = 0
@@ -71,18 +85,17 @@ class NewPrevkeno(task_msg.Task):
                 issue, lottery, frisbee, date = select_prevkeno(NUM)
                 if issue or count > 50:
                     break
-            if lottery:
+            if str(NUM) <= str(issue):
                 nums = pc28_num(lottery.split(','))
-                if str(NUM) <= str(issue):
-                    NUM = issue
-                    set_keno(
-                        issue=issue,
-                        lottery=lottery,
-                        frisbee=frisbee,
-                        date=date,
-                        pc_nums=nums,
-                        pc_sum=sum(nums))
-                    print ('Set NewPrevkeno {}'.format(issue))
+                NUM = issue
+                set_keno(
+                    issue=issue,
+                    lottery=lottery,
+                    frisbee=frisbee,
+                    date=date,
+                    pc_nums=nums,
+                    pc_sum=sum(nums))
+                print ('Set NewPrevkeno {}'.format(issue))
             else:
                 task_msg.send_task('tasks.service.lottery.SelectPrevkeno',kwargs={"issue":NUM})
 

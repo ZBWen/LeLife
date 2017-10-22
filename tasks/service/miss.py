@@ -11,7 +11,7 @@ KBKE = 8601001
 
 class Prevkeno(object):
 
-    def get_miss_prevkeno():
+    def get_miss_prevkeno(self):
         SELECT_SQL = '''
                 SELECT 
                     issue 
@@ -21,8 +21,24 @@ class Prevkeno(object):
             '''
         mysql = Mysql()
         result = mysql.getMany(SELECT_SQL,300)
-        print (result)
         return result
+
+    def update_miss(self,issue):
+        try:
+            mysql = Mysql()
+            SQL = '''
+                UPDATE 
+                    lottery_lotterymiss
+                SET 
+                    is_insert=%s, update_date=%s 
+                WHERE issue={}
+                '''.format(issue)
+            mysql.update(SQL,(True,datetime.datetime.now()))
+            mysql.dispose()
+        except Exception as e:
+            print ('e %s' % traceback.format_exc())
+            mysql.dispose(isEnd=0)
+
 
     def select_miss(self,issue_len=1000):
         issue = 0  # 期号，期号计数
