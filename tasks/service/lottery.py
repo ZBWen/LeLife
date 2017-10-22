@@ -20,11 +20,11 @@ class SetMissPrevkeno(task_msg.Task):
         issue = None
         prevkeno = Prevkeno()
         issues = prevkeno.get_miss_prevkeno()
-        for info in issues and lottery:
+        for info in issues:
             try:
                 NUM = info['issue']
                 issue, lottery, frisbee, date = get_prevkeno_num(NUM)
-                if str(NUM) == str(issue):
+                if str(NUM) == str(issue) and lottery:
                     nums = pc28_num(lottery.split(','))
                     set_keno(
                         issue=issue,
