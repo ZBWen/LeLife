@@ -20,7 +20,7 @@ class SetMissPrevkeno(task_msg.Task):
         issue = None
         prevkeno = Prevkeno()
         issues = prevkeno.get_miss_prevkeno()
-        for info in issues:
+        for info in issues and lottery:
             try:
                 NUM = info['issue']
                 issue, lottery, frisbee, date = get_prevkeno_num(NUM)
@@ -50,11 +50,13 @@ class SelectPrevkeno(task_msg.Task):
         print ('Select {}'.format(NUM))
         while not issue:
             count += 1
+            time.sleep(3)
             if count > 60:
+                print ('UN Select {}'.format(NUM))
                 return
             issue, lottery, frisbee, date = select_prevkeno(NUM)
 
-        if str(NUM) == str(issue):
+        if str(NUM) == str(issue) and lottery:
             print ('Set {}-{}'.format(lottery,date))
             nums = pc28_num(lottery.split(','))
             set_keno(
@@ -85,7 +87,7 @@ class NewPrevkeno(task_msg.Task):
                 issue, lottery, frisbee, date = select_prevkeno(NUM)
                 if issue or count > 50:
                     break
-            if str(NUM) <= str(issue):
+            if str(NUM) <= str(issue) and lottery:
                 nums = pc28_num(lottery.split(','))
                 NUM = issue
                 set_keno(
