@@ -50,8 +50,8 @@ class SelectPrevkeno(task_msg.Task):
         print ('Select {}'.format(NUM))
         while not issue:
             count += 1
-            time.sleep(3)
-            if count > 60:
+            time.sleep(10)
+            if count > 40:
                 print ('UN Select {}'.format(NUM))
                 return
             issue, lottery, frisbee, date = select_prevkeno(NUM)
@@ -85,7 +85,7 @@ class NewPrevkeno(task_msg.Task):
             while True:
                 count += 1
                 issue, lottery, frisbee, date = select_prevkeno(NUM)
-                if issue or count > 50:
+                if issue or count > 40:
                     break
             if str(NUM) <= str(issue) and lottery:
                 nums = pc28_num(lottery.split(','))
