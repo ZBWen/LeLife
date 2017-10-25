@@ -1,0 +1,39 @@
+<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6 lt8"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7 lt8"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8 lt8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="zh-cmn-Hans" class="no-js"> <!--<![endif]-->
+   <head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>MinD- {% block title %}{% endblock %}</title>
+	
+	{% block csrf %}{% endblock %}
+	{% block meta %}{% endblock %}
+	{% block css %}{% endblock %}
+	</head>
+	 <body>
+	{% block body %}
+		{% block header %}
+			{% include '_header.html'  %}
+		{% endblock %}
+		{% block main %}{% endblock %}
+	{% endblock %}
+
+	{% block footer %}
+		{% include '_footer.html'  %}
+	{% endblock %}
+	</body>
+
+	<!-- Bootstrap core JavaScript -->
+	<!-- Placed at the end of the document so the pages load faster -->
+
+	</body>
+	{% block templates %}{% endblock %}
+	{% block js %}{% endblock %}
+	</html>
