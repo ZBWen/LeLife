@@ -38,6 +38,8 @@ class SetMissPrevkeno(task_msg.Task):
             except Exception as e:
                 print ('SetMissPrevkeno:{}'.format(traceback.format_exc()))
 
+        task_msg.send_task('tasks.service.lottery.SetMissPrevkeno')
+
 
 class SelectPrevkeno(task_msg.Task):
     max_retries = 0
