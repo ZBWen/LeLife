@@ -2,6 +2,7 @@
 {% block title %}北京快乐8{% endblock %}
 
 {% block main %}
-
-1233
+{% for keno in kenos %}
+	{{ keno.issue }}--{{ keno.nums }}--{{ keno.frisbee }}--{{ keno.date }}
+{% endfor %}
 {% endblock %}
