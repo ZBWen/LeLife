@@ -3,6 +3,6 @@
 
 {% block main %}
 {% for keno in kenos %}
-	{{ keno.issue }}--{{ keno.nums }}--{{ keno.frisbee }}--{{ keno.date }}
+	{{ keno.issue }}--{{ keno.nums }}--{{ keno.frisbee }}--{{ keno.date|date:'Y-m-d' }}<br>
 {% endfor %}
 {% endblock %}
