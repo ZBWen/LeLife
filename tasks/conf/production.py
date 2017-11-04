@@ -44,7 +44,7 @@ CELERYBEAT_SCHEDULE = {
     # 北京快乐8 遗漏 查询并添加
     'set_miss_prevkeno':{
         'task': 'tasks.service.lottery.SetMissPrevkeno',
-        'schedule': crontab(hour='22',minute='3'),
+        'schedule': crontab(hour='0,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23'),
         "options":{},
         'args': ()
     },
