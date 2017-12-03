@@ -18,7 +18,7 @@ def deployweb():
         run("git pull origin master")
         run("/mnt/envs/env_web/bin/pip3 install -r requirements.txt")
     with cd("/mnt/deploy_bak"):
-        run("rm -rf portal")
+        run("rm -rf web")
         run("cp -r /mnt/deploy/web web")
     with cd("/mnt/deploy"):
         run("rm -rf web")
