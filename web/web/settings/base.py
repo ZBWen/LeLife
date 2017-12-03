@@ -40,8 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_extensions',
+    'rest_framework',
 
-    'lottery'
+    'lottery',
+    'APIStore'
 ]
 
 MIDDLEWARE = [
@@ -151,3 +153,14 @@ LANGUAGES = (
     ('zh-Hans',u'简体中文'),
     #('en-us',u'English'),
 )
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
